@@ -63,8 +63,6 @@ void init_item_parser()
 
 void init_char_parser()
 {
-	// "JSAV" magic value, unknown header fields
-	//H_RULE(jsav, h_token("JSAVu", 5));
 	H_RULE(exp, h_uint64());
 
 	d1achar = exp;
