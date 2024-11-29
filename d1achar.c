@@ -5,7 +5,14 @@
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
 HParser *d1aspecialist;
-HParser *d1atxtchar;
+HParser *d1atxtstring;
+
+void init_text_string_parser()
+{
+	H_RULE(text_string, h_repeat_n(h_uint16(), 16));
+
+	d1atxtstring = text_string;
+}
 
 void init_specialist_parser()
 {
@@ -63,9 +70,98 @@ void init_item_parser()
 
 void init_char_parser()
 {
-	H_RULE(exp, h_uint64());
+	H_RULE(char_exp, h_uint64());
 
-	d1achar = exp;
+	H_RULE(char_weapon, d1aitem);
+	H_RULE(char_etc_items, h_repeat_n(d1aitem, 3));
+
+	H_RULE(char_name, d1atxtstring);
+	H_RULE(char_unk1, h_uint8());
+	H_RULE(char_class, d1atxtstring);
+	H_RULE(char_unk98, h_repeat_n(h_uint8(), 35));
+	H_RULE(char_psn_resist, h_uint16());
+	H_RULE(char_slp_resist, h_uint16());
+	H_RULE(char_par_resist, h_uint16());
+	H_RULE(char_fgt_resist, h_uint16());
+	H_RULE(char_dpr_resist, h_uint16());
+	H_RULE(char_unk2, h_repeat_n(h_uint8(), 110));
+	H_RULE(char_skillexps, h_repeat_n(h_uint32(), 96));
+	H_RULE(char_skillids, h_repeat_n(h_uint16(), 96));
+	H_RULE(char_skillevels, h_repeat_n(h_uint8(), 96));
+
+	H_RULE(char_hp_current, h_uint32());
+	H_RULE(char_sp_current, h_uint32());
+	H_RULE(char_hp, h_uint32());
+	H_RULE(char_sp, h_uint32());
+	H_RULE(char_atk, h_uint32());
+	H_RULE(char_def, h_uint32());
+	H_RULE(char_int, h_uint32());
+	H_RULE(char_spd, h_uint32());
+	H_RULE(char_hit, h_uint32());
+	H_RULE(char_res, h_uint32());
+
+	H_RULE(char_hp_actual, h_uint32());
+	H_RULE(char_sp_actual, h_uint32());
+	H_RULE(char_atk_actual, h_uint32());
+	H_RULE(char_def_actual, h_uint32());
+	H_RULE(char_int_actual, h_uint32());
+	H_RULE(char_spd_actual, h_uint32());
+	H_RULE(char_hit_actual, h_uint32());
+	H_RULE(char_res_actual, h_uint32());
+
+	H_RULE(char_unk4, h_repeat_n(h_uint8(), 32));
+	H_RULE(char_mana, h_uint32());
+	H_RULE(char_unk99, h_repeat_n(h_uint8(), 40));
+
+	H_RULE(char_hp_base, h_uint8());
+	H_RULE(char_sp_base, h_uint8());
+	H_RULE(char_atk_base, h_uint8());
+	H_RULE(char_def_base, h_uint8());
+	H_RULE(char_int_base, h_uint8());
+	H_RULE(char_spd_base, h_uint8());
+	H_RULE(char_hit_base, h_uint8());
+	H_RULE(char_res_base, h_uint8());
+
+	H_RULE(char_unk96, h_repeat_n(h_uint8(), 20));
+
+	H_RULE(char_fire_res_base, h_int8());	// order of actual vs. base could be different here, needs more testing
+	H_RULE(char_wind_res_base, h_int8());
+	H_RULE(char_ice_res_base, h_int8());
+
+	H_RULE(char_fire_res_actual, h_int8());
+	H_RULE(char_wind_res_actual, h_int8());
+	H_RULE(char_ice_res_actual, h_int8());
+
+	H_RULE(char_jump_base, h_uint8());
+	H_RULE(char_jump_actual, h_uint8());
+	H_RULE(char_mv_base, h_uint8());
+	H_RULE(char_mv_actual, h_uint8());
+	H_RULE(char_counter_base, h_uint8());
+	H_RULE(char_counter_actual, h_uint8());
+
+	H_RULE(char_unk97, h_repeat_n(h_uint8(), 13));
+	H_RULE(char_assemblyrank, h_uint8());
+	H_RULE(char_unk95, h_repeat_n(h_uint8(), 26));
+
+	d1achar = h_sequence(char_exp, char_weapon, char_etc_items, char_name, char_unk1,
+				char_class, char_unk98, char_psn_resist, char_slp_resist,
+				char_par_resist, char_fgt_resist, char_dpr_resist,
+				char_unk2, char_skillexps, char_skillids, 
+				char_skillevels, char_hp_current, char_sp_current,
+				char_hp, char_sp, char_atk, char_def, char_int, char_spd,
+				char_hit, char_res, char_hp_actual, char_sp_actual,
+				char_atk_actual, char_def_actual, char_int_actual,
+				char_spd_actual, char_hit_actual, char_res_actual,
+				char_unk4, char_mana, char_unk99, char_hp_base,
+				char_sp_base, char_atk_base, char_def_base,
+				char_int_base, char_spd_base, char_hit_base,
+				char_res_base, char_unk96, char_fire_res_base,
+				char_wind_res_base, char_ice_res_base,
+				char_fire_res_actual, char_wind_res_actual,
+				char_ice_res_actual, char_jump_base, char_jump_actual,
+				char_mv_base, char_mv_actual, char_counter_base,
+				char_counter_actual, char_unk97, char_assemblyrank,
+				char_unk95, NULL);
 
 }
 
