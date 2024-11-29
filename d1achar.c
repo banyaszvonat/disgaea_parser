@@ -149,7 +149,7 @@ void init_char_parser()
 	d1achar = h_sequence(char_exp, char_weapon, char_etc_items, char_name, char_unk1,
 				char_class, char_unk98, char_psn_resist, char_slp_resist,
 				char_par_resist, char_fgt_resist, char_dpr_resist,
-				char_unk2, char_skillexps, char_skillids, 
+				char_unk2, char_skillexps, char_skillids,
 				char_skillevels, char_hp_current, char_sp_current,
 				char_hp, char_sp, char_atk, char_def, char_int, char_spd,
 				char_hit, char_res, char_hp_actual, char_sp_actual,
