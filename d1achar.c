@@ -19,7 +19,7 @@ void init_text_string_parser()
 
 void init_specialist_parser()
 {
-	H_RULE(spec_level, h_uint16());
+	H_RULE(spec_level, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(spec_job, h_uint8());
 	H_RULE(spec_uniquer, h_uint8());
 
@@ -30,30 +30,30 @@ void init_item_parser()
 {
 	H_RULE(item_specialists, h_repeat_n(d1aspecialist, 16));
 
-	H_RULE(item_basesalep, h_uint32());
-	H_RULE(item_unk_1, h_uint32());
+	H_RULE(item_basesalep, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_unk_1, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 
-	H_RULE(item_hp, h_uint32());
-	H_RULE(item_sp, h_uint32());
-	H_RULE(item_atk, h_uint32());
-	H_RULE(item_def, h_uint32());
-	H_RULE(item_int, h_uint32());
-	H_RULE(item_spd, h_uint32());
-	H_RULE(item_hit, h_uint32());
-	H_RULE(item_res, h_uint32());
+	H_RULE(item_hp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_sp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_atk, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_def, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_int, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_spd, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_hit, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(item_res, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 
-	H_RULE(item_hp_base, h_uint16());
-	H_RULE(item_sp_base, h_uint16());
-	H_RULE(item_atk_base, h_uint16());
-	H_RULE(item_def_base, h_uint16());
-	H_RULE(item_int_base, h_uint16());
-	H_RULE(item_spd_base, h_uint16());
-	H_RULE(item_hit_base, h_uint16());
-	H_RULE(item_res_base, h_uint16());
+	H_RULE(item_hp_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_sp_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_atk_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_def_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_int_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_spd_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_hit_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_res_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 
-	H_RULE(item_type, h_uint16());
-	H_RULE(item_level, h_uint16());
-	H_RULE(item_unk2, h_uint16());
+	H_RULE(item_type, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_level, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(item_unk2, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(item_rarity, h_uint8());
 
 	H_RULE(item_unk3, h_uint8());
@@ -73,7 +73,7 @@ void init_item_parser()
 
 void init_char_parser()
 {
-	H_RULE(char_exp, h_uint64());
+	H_RULE(char_exp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint64()));
 
 	H_RULE(char_weapon, d1aitem);
 	H_RULE(char_etc_items, h_repeat_n(d1aitem, 3));
@@ -82,38 +82,38 @@ void init_char_parser()
 	H_RULE(char_unk1, h_uint8());
 	H_RULE(char_class, d1atxtstring);
 	H_RULE(char_unk98, h_repeat_n(h_uint8(), 35));
-	H_RULE(char_psn_resist, h_uint16());
-	H_RULE(char_slp_resist, h_uint16());
-	H_RULE(char_par_resist, h_uint16());
-	H_RULE(char_fgt_resist, h_uint16());
-	H_RULE(char_dpr_resist, h_uint16());
+	H_RULE(char_psn_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_slp_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_par_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_fgt_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_dpr_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(char_unk2, h_repeat_n(h_uint8(), 110));
-	H_RULE(char_skillexps, h_repeat_n(h_uint32(), 96));
-	H_RULE(char_skillids, h_repeat_n(h_uint16(), 96));
+	H_RULE(char_skillexps, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()), 96));
+	H_RULE(char_skillids, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()), 96));
 	H_RULE(char_skillevels, h_repeat_n(h_uint8(), 96));
 
-	H_RULE(char_hp_current, h_uint32());
-	H_RULE(char_sp_current, h_uint32());
-	H_RULE(char_hp, h_uint32());
-	H_RULE(char_sp, h_uint32());
-	H_RULE(char_atk, h_uint32());
-	H_RULE(char_def, h_uint32());
-	H_RULE(char_int, h_uint32());
-	H_RULE(char_spd, h_uint32());
-	H_RULE(char_hit, h_uint32());
-	H_RULE(char_res, h_uint32());
+	H_RULE(char_hp_current, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_sp_current, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_hp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_sp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_atk, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_def, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_int, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_spd, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_hit, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_res, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 
-	H_RULE(char_hp_actual, h_uint32());
-	H_RULE(char_sp_actual, h_uint32());
-	H_RULE(char_atk_actual, h_uint32());
-	H_RULE(char_def_actual, h_uint32());
-	H_RULE(char_int_actual, h_uint32());
-	H_RULE(char_spd_actual, h_uint32());
-	H_RULE(char_hit_actual, h_uint32());
-	H_RULE(char_res_actual, h_uint32());
+	H_RULE(char_hp_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_sp_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_atk_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_def_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_int_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_spd_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_hit_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_res_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 
 	H_RULE(char_unk4, h_repeat_n(h_uint8(), 32));
-	H_RULE(char_mana, h_uint32());
+	H_RULE(char_mana, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_unk99, h_repeat_n(h_uint8(), 40));
 
 	H_RULE(char_hp_base, h_uint8());
