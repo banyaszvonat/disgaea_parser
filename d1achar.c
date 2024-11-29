@@ -1,6 +1,9 @@
 #include <hammer/hammer.h>
 #include <hammer/glue.h>
-
+#include <err.h>
+#include <fcntl.h> /* open() */
+#include <unistd.h> /* lseek() */
+#include <sys/mman.h> /* mmap() */
 
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
@@ -167,5 +170,44 @@ void init_char_parser()
 
 int main(int argc, char *argv[])
 {
+	int fd;
+	off_t sz;
+	const uint8_t *input_bytes;
+	HParseResult *res_d1char;
+
+
+	if (argc < 2 || argc > 2)
+	{
+		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
+		return 1;
+	}
+
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		err(1, "%s", argv[1]);
+	sz = lseek(fd, 0, SEEK_END);
+	if (sz == -1)
+		err(1, "lseek error");
+	if (sz < 0)
+		err(1, "lseek: returned size less than 0");
+	input_bytes = mmap(NULL, sz ? sz : 1, PROT_READ, MAP_PRIVATE, fd, 0);
+	if (input_bytes == MAP_FAILED)
+		err(1, "mmap error");
+
+	init_text_string_parser();
+	init_specialist_parser();
+	init_item_parser();
+	init_char_parser();
+
+	res_d1char = h_parse(d1achar, input_bytes, sz);
+
+	if(!res_d1char)
+	{
+		fprintf(stderr, "%s: parse failed lol\n", argv[1]);
+		return 2;
+	}
+
+	h_pprintln(stdout, res_d1char->ast);
+
 	return 0;
 }
