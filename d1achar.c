@@ -10,11 +10,83 @@ HParser *d1aitem;
 HParser *d1aspecialist;
 HParser *d1atxtstring;
 
+HParsedToken*
+act_d1atxtchar(const HParseResult *p, void *u)
+{
+	uint16_t enc_char = H_CAST_UINT(p->ast);
+	uint8_t dec_char;
+	// Uppercase letters
+	if (enc_char >= 0x8260 && enc_char <= 0x827A)
+	{
+		dec_char = (uint8_t) ((enc_char - 0x8260) + 'A');
+	}
+	// Lowercase letters
+	else if (enc_char >= 0x8281 && enc_char <= 0x829A)
+	{
+		dec_char = (uint8_t) ((enc_char - 0x8281) + 'a');
+	}
+	else if (enc_char == 0x8140)
+	{
+		dec_char = ' ';
+	}
+	else if (enc_char == 0x8146)
+	{
+		dec_char = ':';
+	}
+	else if (enc_char == 0x817C)
+	{
+		dec_char = '-';
+	}
+	else if (enc_char == 0x8166)
+	{
+		dec_char = 0x27; // the ' character
+	}
+	else if (enc_char == 0x8144)
+	{
+		dec_char = '.';
+	}
+	// Assuming other values in the range not handled above are unknown but valid characters
+	// Rendering them as space for now
+	else if (enc_char >= 0x8140 && enc_char <= 0x829A)
+	{
+		dec_char = ' ';
+	}
+	// Presumed invalid
+	// This can be handled and rejected using a validation, but for now it is permissive
+	else
+	{
+		dec_char = '.';
+	}
+
+	return H_MAKE_UINT(dec_char);
+}
+
+// Takes a sequence of characters (uints) and creates an array of bytes from them
+// decoding the characters and merging them into a byte array probably can also be done via a monadic bind
+HParsedToken*
+act_d1asavestring(const HParseResult *p, void *u)
+{
+	HCountedArray *seq = H_CAST_SEQ(p->ast);
+	uint8_t *bytes;
+
+	bytes = h_arena_malloc(p->arena, seq->used);
+	for (size_t i = 0; i < seq->used; ++i)
+		bytes[i] = H_CAST_UINT(seq->elements[i]);
+
+	return H_MAKE_BYTES(bytes, seq->used);
+}
+
 void init_text_string_parser()
 {
-	H_RULE(text_string, h_repeat_n(h_uint16(), 16));
+	//H_RULE(text_string, h_repeat_n(h_uint16(), 16));
+	//HACK: strings generally seem to be two bytes per character, terminated by a single null byte.
+	//	although the size reserved for it in the character data seems to be 32+1 bytes, so we can get away with assuming fixed size
+	//	need to test: h_choice(h_ch('\0'), h_many1(h_butnot(h_uint16(), h_ch('\0')), NULL), NULL);
+	H_ARULE(d1atxtchar, h_uint16());
+	H_ARULE(d1asavestring, h_repeat_n(d1atxtchar, 16));
 
-	d1atxtstring = text_string;
+	//d1atxtstring = text_string;
+	d1atxtstring = d1asavestring;
 }
 
 void init_specialist_parser()
