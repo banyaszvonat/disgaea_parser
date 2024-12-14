@@ -5,6 +5,8 @@
 #include <unistd.h> /* lseek() */
 #include <sys/mman.h> /* mmap() */
 
+#include "d1aitemtypes.h"
+
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
 HParser *d1aspecialist;
@@ -123,7 +125,8 @@ void init_item_parser()
 	H_RULE(item_hit_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(item_res_base, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 
-	H_RULE(item_type, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	//H_RULE(item_type, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_VARULE(itemtype, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(item_level, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(item_unk2, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(item_rarity, h_uint8());
@@ -139,7 +142,7 @@ void init_item_parser()
 				item_sp, item_atk, item_def, item_int, item_spd, item_hit,
 				item_res, item_hp_base, item_sp_base, item_atk_base,
 				item_def_base, item_int_base, item_spd_base, item_hit_base,
-				item_res_base, item_type, item_level, item_unk2, item_rarity,
+				item_res_base, itemtype, item_level, item_unk2, item_rarity,
 				item_unk3, item_unk4, item_spec_slots, item_unk5, NULL);
 }
 
@@ -270,6 +273,7 @@ int main(int argc, char *argv[])
 	init_specialist_parser();
 	init_item_parser();
 	init_char_parser();
+	itemtypes_init();
 
 	res_d1char = h_parse(d1achar, input_bytes, sz);
 
