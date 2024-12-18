@@ -18,7 +18,7 @@
 */
 HTokenType TT_ItemType;
 
-static const char *item_type_names[0x89A];
+static const char *item_type_names[0x89A] = { "!!Invalid item type ID!!" };
 
 /*
   This validation is necessary because we only allocated a 0x89A long array

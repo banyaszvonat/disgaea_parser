@@ -17,5 +17,8 @@ all: d1achar
 d1achar: $(SOURCES)
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SOURCES) -lhammer
 
+debug: $(SOURCES)
+	$(CC) -o d1achar_debug $(CFLAGS) -g $(LDFLAGS) $(SOURCES) -lhammer
+
 clean:
-	rm -f d1achar
+	rm -f d1achar d1achar_debug

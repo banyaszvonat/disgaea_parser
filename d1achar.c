@@ -95,11 +95,11 @@ void init_text_string_parser()
 void init_specialist_parser()
 {
 	//H_RULE(spec_level, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(spec_job, h_uint8());
+	//H_RULE(spec_job, h_uint8());
 	H_RULE(spec_uniquer, h_uint8());
 
 	//d1aspecialist = h_sequence(spec_level, spec_job, spec_uniquer, NULL);
-	d1aspecialist = h_sequence(d1aspecialistlevel, spec_job, spec_uniquer, NULL);
+	d1aspecialist = h_sequence(d1aspecialistlevel, d1aspecialistjob, spec_uniquer, NULL);
 }
 
 void init_item_parser()
