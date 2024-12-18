@@ -6,10 +6,11 @@
 #include <sys/mman.h> /* mmap() */
 
 #include "d1aitemtypes.h"
+#include "d1aspecialist.h"
 
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
-HParser *d1aspecialist;
+HParser *d1aspecialist; // TODO: move entirely to d1aspecialist.h and .c
 HParser *d1atxtstring;
 
 HParsedToken*
@@ -93,11 +94,12 @@ void init_text_string_parser()
 
 void init_specialist_parser()
 {
-	H_RULE(spec_level, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	//H_RULE(spec_level, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(spec_job, h_uint8());
 	H_RULE(spec_uniquer, h_uint8());
 
-	d1aspecialist = h_sequence(spec_level, spec_job, spec_uniquer, NULL);
+	//d1aspecialist = h_sequence(spec_level, spec_job, spec_uniquer, NULL);
+	d1aspecialist = h_sequence(d1aspecialistlevel, spec_job, spec_uniquer, NULL);
 }
 
 void init_item_parser()
@@ -270,10 +272,11 @@ int main(int argc, char *argv[])
 		err(1, "mmap error");
 
 	init_text_string_parser();
-	init_specialist_parser();
+	specialists_init_parsers();
+	init_specialist_parser(); //TODO: remove this function after moving the parsers to d1aspecialist.c
 	init_item_parser();
 	init_char_parser();
-	itemtypes_init();
+	itemtypes_init_parser();
 
 	res_d1char = h_parse(d1achar, input_bytes, sz);
 

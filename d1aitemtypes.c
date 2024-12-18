@@ -59,11 +59,16 @@ void pp_itemtype(FILE *stream, const HParsedToken *tok, int indent, int delta)
 
 void itemtypes_fill_type_names();
 
-void itemtypes_init()
+//TODO: maybe create the HParser here, and add a HParser* to the header
+void itemtypes_init_parser()
 {
 	TT_ItemType = h_allocate_token_new("ItemType", NULL, pp_itemtype);
 	itemtypes_fill_type_names();
 }
+
+/*
+  Values from https://github.com/Xkeeper0/disgaea-pc-tools/
+*/
 
 void itemtypes_fill_type_names()
 {
@@ -567,3 +572,4 @@ void itemtypes_fill_type_names()
 
 	item_type_names[0x0899] = "Mr. Gency's Exit";
 }
+
