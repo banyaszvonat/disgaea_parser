@@ -202,7 +202,10 @@ void init_char_parser()
 	H_RULE(char_hit_base, h_uint8());
 	H_RULE(char_res_base, h_uint8());
 
-	H_RULE(char_unk96, h_repeat_n(h_uint8(), 20));
+	H_RULE(char_unk94, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_unk89, h_repeat_n(h_uint8(), 2));
+	H_RULE(char_classid, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16())); // TODO: token type, class names
+	H_RULE(char_unk96, h_repeat_n(h_uint8(), 14));
 
 	H_RULE(char_fire_res_base, h_int8());	// order of actual vs. base could be different here, needs more testing
 	H_RULE(char_wind_res_base, h_int8());
@@ -235,7 +238,8 @@ void init_char_parser()
 				char_unk4, char_mana, char_unk99, char_hp_base,
 				char_sp_base, char_atk_base, char_def_base,
 				char_int_base, char_spd_base, char_hit_base,
-				char_res_base, char_unk96, char_fire_res_base,
+				char_res_base, char_unk94, char_unk89, char_classid,
+				char_unk96, char_fire_res_base,
 				char_wind_res_base, char_ice_res_base,
 				char_fire_res_actual, char_wind_res_actual,
 				char_ice_res_actual, char_jump_base, char_jump_actual,
