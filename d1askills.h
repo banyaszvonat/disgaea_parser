@@ -12,7 +12,7 @@ void skills_init_parsers();
 const char *skills_get_name(SkillID id);
 
 bool validate_skillid(HParseResult *p, void *u);
-HParsedToken *act_skillid(const HParseResult *p, void *u);
+HParsedToken* act_skillid(const HParseResult *p, void *u);
 void pp_skillid(FILE *stream, const HParsedToken *tok, int indent, int delta);
 
 //TODO
