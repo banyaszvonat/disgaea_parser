@@ -46,7 +46,6 @@ const char *specialists_get_job_name(SpecialistJob job)
 */
 bool validate_specialistjob(HParseResult *p, void *u)
 {
-	fprintf(stderr, "Token type: %d, expected %d\n", p->ast->token_type, TT_USER);
 	return *(H_CAST(SpecialistJob, p->ast)) < 0x87;
 }
 
