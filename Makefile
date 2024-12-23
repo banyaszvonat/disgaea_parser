@@ -8,11 +8,11 @@ HAMMER_INCLUDE = .
 HAMMER_LIB = ./lib
 CFLAGS += -I$(HAMMER_INCLUDE)
 LDFLAGS += -L$(HAMMER_LIB)
-SOURCES = d1achar.c d1aitemtypes.c d1aspecialist.c
+SOURCES = d1achar.c d1aitemtypes.c d1aspecialist.c d1askills.c
 
 #.PHONY: all test clean
 .PHONY: all clean
-all: d1achar
+all: d1achar debug
 
 d1achar: $(SOURCES)
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SOURCES) -lhammer

@@ -7,6 +7,7 @@
 
 #include "d1aitemtypes.h"
 #include "d1aspecialist.h"
+#include "d1askills.h"
 
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
@@ -166,7 +167,8 @@ void init_char_parser()
 	H_RULE(char_dpr_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(char_unk2, h_repeat_n(h_uint8(), 110));
 	H_RULE(char_skillexps, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()), 96));
-	H_RULE(char_skillids, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()), 96));
+	//H_RULE(char_skillids, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()), 96));
+	H_RULE(char_skillids, h_repeat_n(d1askillid, 96));
 	H_RULE(char_skillevels, h_repeat_n(h_uint8(), 96));
 
 	H_RULE(char_hp_current, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
@@ -278,9 +280,10 @@ int main(int argc, char *argv[])
 	init_text_string_parser();
 	specialists_init_parsers();
 	init_specialist_parser(); //TODO: remove this function after moving the parsers to d1aspecialist.c
-	init_item_parser();
-	init_char_parser();
 	itemtypes_init_parser();
+	init_item_parser();
+	skills_init_parsers();
+	init_char_parser();
 
 	res_d1char = h_parse(d1achar, input_bytes, sz);
 
