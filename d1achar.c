@@ -20,9 +20,8 @@ typedef struct {
 	int level;
 	int mana;
 	int exp;
-	//TODO: could be ItemType
-	const char *weapon;
-	const char *equipment[3];
+	ItemType weapon;
+	ItemType equipment[3];
 
 	int skills_known;
 	SkillID skills[96];
@@ -283,12 +282,12 @@ void print_summary(HParseResult *char_res)
 	  but for now, only the type is interesting
 	*/
 	ItemType *weapon = H_INDEX(ItemType, char_res->ast, 1, 19);
-	summary.weapon = itemtypes_get_name(*weapon);
+	summary.weapon = *weapon;
 
 	for(int i = 0; i < 3; i++)
 	{
 		ItemType *item = H_INDEX(ItemType, char_res->ast, 2, i, 19);
-		summary.equipment[i] = itemtypes_get_name(*item);
+		summary.equipment[i] = *item;
 	}
 
 	summary.skills_known = H_INDEX_UINT(char_res->ast, 62);
@@ -299,11 +298,11 @@ void print_summary(HParseResult *char_res)
 
 	printf("Level: %d\nMana: %d\nEXP: %d\n", summary.level, summary.mana, summary.exp);
 	printf("Weapon:\n");
-	printf("\t%s\n", summary.weapon);
+	printf("\t%s\n", itemtypes_get_name(summary.weapon));
 	printf("Items:\n");
 	for(int i = 0; i < 3; i++)
 	{
-		printf("\t%s\n", summary.equipment[i]);
+		printf("\t%s\n", itemtypes_get_name(summary.equipment[i]));
 	}
 	printf("Skills:\n");
 	for(int i = 0; i < summary.skills_known; i++)
