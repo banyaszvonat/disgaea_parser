@@ -264,6 +264,11 @@ void init_char_parser()
 
 }
 
+void print_summary(HParseResult char_res)
+{
+	return;
+}
+
 int main(int argc, char *argv[])
 {
 	int fd;
@@ -300,7 +305,7 @@ int main(int argc, char *argv[])
 
 	res_d1char = h_parse(d1achar, input_bytes, sz);
 
-	if(!res_d1char)
+	if(!res_d1char || !res_d1char->ast)
 	{
 		fprintf(stderr, "%s: parse failed lol\n", argv[1]);
 		close(fd);
