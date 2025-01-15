@@ -271,10 +271,14 @@ void print_summary(HParseResult *char_res)
 	summary.mana = H_INDEX_UINT(char_res->ast, 35);
 	summary.exp = H_INDEX_UINT(char_res->ast, 0);
 
-	ItemType *weapon = H_INDEX(ItemType, char_res->ast, 1, 19); // Itemtype is 19th element. Later, an Item token can be defined
+	/*
+	  Item's type is the 19th field of the sequence representing items.
+	  Ideally the application would define a struct to deal with items,
+	  but for now, only the type is interesting
+	*/
+	ItemType *weapon = H_INDEX(ItemType, char_res->ast, 1, 19);
 	summary.weapon = itemtypes_get_name(*weapon);
 
-	//HCountedArray *equipment = H_INDEX_SEQ(char_res->ast, 2);
 	for(int i = 0; i < 3; i++)
 	{
 		ItemType *item = H_INDEX(ItemType, char_res->ast, 2, i, 19);
