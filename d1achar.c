@@ -4,7 +4,6 @@
 #include <fcntl.h> /* open() */
 #include <unistd.h> /* lseek() */
 #include <sys/mman.h> /* mmap() */
-#include <stdlib.h> /* free() */
 
 #include "d1aitemtypes.h"
 #include "d1aspecialist.h"
@@ -370,7 +369,7 @@ int main(int argc, char *argv[])
 		return 2;
 	}
 
-	h_pprintln(stdout, res_d1char->ast);
+	//h_pprintln(stdout, res_d1char->ast);
 	print_summary(res_d1char);
 
 	close(fd);
