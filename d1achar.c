@@ -20,11 +20,12 @@ typedef struct {
 	int level;
 	int mana;
 	int exp;
+	//TODO: could be ItemType
 	const char *weapon;
 	const char *equipment[3];
 
-	int num_skills;
-	const char *skills[96];
+	int skills_known;
+	SkillID skills[96];
 } D1ACharSummary;
 
 HParsedToken*
@@ -237,7 +238,11 @@ void init_char_parser()
 	H_RULE(char_counter_base, h_uint8());
 	H_RULE(char_counter_actual, h_uint8());
 
-	H_RULE(char_unk97, h_repeat_n(h_uint8(), 13));
+	H_RULE(char_unk85, h_uint8());
+	H_RULE(char_skillsknown, h_uint8());
+	H_RULE(char_unk97, h_repeat_n(h_uint8(), 7));
+	H_RULE(char_currentweapontype, h_uint8());
+	H_RULE(char_unk83, h_repeat_n(h_uint8(), 3));
 	H_RULE(char_assemblyrank, h_uint8());
 	H_RULE(char_unk95, h_repeat_n(h_uint8(), 26));
 
@@ -259,8 +264,9 @@ void init_char_parser()
 				char_fire_res_actual, char_wind_res_actual,
 				char_ice_res_actual, char_jump_base, char_jump_actual,
 				char_mv_base, char_mv_actual, char_counter_base,
-				char_counter_actual, char_unk97, char_assemblyrank,
-				char_unk95, NULL);
+				char_counter_actual, char_unk85, char_skillsknown,
+				char_unk97, char_currentweapontype, char_unk83,
+				char_assemblyrank, char_unk95, NULL);
 
 }
 
@@ -285,6 +291,12 @@ void print_summary(HParseResult *char_res)
 		summary.equipment[i] = itemtypes_get_name(*item);
 	}
 
+	summary.skills_known = H_INDEX_UINT(char_res->ast, 62);
+	for(int i = 0; i < summary.skills_known; i++)
+	{
+		summary.skills[i] = *H_INDEX(SkillID, char_res->ast, 14, i);
+	}
+
 	printf("Level: %d\nMana: %d\nEXP: %d\n", summary.level, summary.mana, summary.exp);
 	printf("Weapon:\n");
 	printf("\t%s\n", summary.weapon);
@@ -293,6 +305,12 @@ void print_summary(HParseResult *char_res)
 	{
 		printf("\t%s\n", summary.equipment[i]);
 	}
+	printf("Skills:\n");
+	for(int i = 0; i < summary.skills_known; i++)
+	{
+		printf("\t%s\n", skills_get_name(summary.skills[i]));
+	}
+
 	return;
 }
 
