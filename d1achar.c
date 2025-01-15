@@ -4,6 +4,7 @@
 #include <fcntl.h> /* open() */
 #include <unistd.h> /* lseek() */
 #include <sys/mman.h> /* mmap() */
+#include <stdlib.h> /* free() */
 
 #include "d1aitemtypes.h"
 #include "d1aspecialist.h"
@@ -15,8 +16,8 @@ HParser *d1aspecialist; // TODO: move entirely to d1aspecialist.h and .c
 HParser *d1atxtstring;
 
 typedef struct {
-	const char *name;
-	const char *class;
+	HBytes name;
+	HBytes class;
 	int level;
 	int mana;
 	int exp;
@@ -272,6 +273,10 @@ void init_char_parser()
 void print_summary(HParseResult *char_res)
 {
 	D1ACharSummary summary;
+
+	summary.name = H_INDEX_BYTES(char_res->ast, 3);
+	summary.class = H_INDEX_BYTES(char_res->ast, 5);
+
 	summary.level = H_INDEX_UINT(char_res->ast, 45);
 	summary.mana = H_INDEX_UINT(char_res->ast, 35);
 	summary.exp = H_INDEX_UINT(char_res->ast, 0);
@@ -279,7 +284,7 @@ void print_summary(HParseResult *char_res)
 	/*
 	  Item's type is the 19th field of the sequence representing items.
 	  Ideally the application would define a struct to deal with items,
-	  but for now, only the type is interesting
+	  but for now, only the type is interesting.
 	*/
 	ItemType *weapon = H_INDEX(ItemType, char_res->ast, 1, 19);
 	summary.weapon = *weapon;
@@ -295,6 +300,15 @@ void print_summary(HParseResult *char_res)
 	{
 		summary.skills[i] = *H_INDEX(SkillID, char_res->ast, 14, i);
 	}
+
+	/*
+	  Can get away with casting size_t -> int here unless the game
+	  uses strings longer than INT_MAX, which would get truncated.
+
+	  Additionally, these particular strings are a fixed 32 bytes (16 characters).
+	*/
+	printf("Name: %.*s\n", (int) summary.name.len, summary.name.token);
+	printf("Class: %.*s\n", (int) summary.class.len, summary.class.token);
 
 	printf("Level: %d\nMana: %d\nEXP: %d\n", summary.level, summary.mana, summary.exp);
 	printf("Weapon:\n");
