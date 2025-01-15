@@ -14,6 +14,19 @@ HParser *d1aitem;
 HParser *d1aspecialist; // TODO: move entirely to d1aspecialist.h and .c
 HParser *d1atxtstring;
 
+typedef struct {
+	const char *name;
+	const char *class;
+	int level;
+	int mana;
+	int exp;
+	const char *weapon;
+	const char *equipment[3];
+
+	int num_skills;
+	const char *skills[96];
+} D1ACharSummary;
+
 HParsedToken*
 act_d1atxtchar(const HParseResult *p, void *u)
 {
