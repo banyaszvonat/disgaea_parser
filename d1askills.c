@@ -21,6 +21,7 @@ HParsedToken *act_skillid(const HParseResult *p, void *u)
 	return H_MAKE(SkillID, si);
 }
 
+// TODO: check if this actually has to be exported in the header
 void pp_skillid(FILE *stream, const HParsedToken *tok, int indent, int delta)
 {
 	SkillID *si = H_CAST(SkillID, tok);
@@ -32,11 +33,23 @@ const char* skills_get_name(SkillID id)
 	return skill_names[id];
 }
 
+/*
+   Not sure what constraints are on the unambiguous printing function.
+   Here it's used for printing into a string.
+
+   An alternative to using this would be to H_CAST() the skillID token, and use skills_get_name() directly when printing.
+*/
+void unamb_skillid(const HParsedToken *tok, struct result_buf *buf)
+{
+	SkillID *si = H_CAST(SkillID, tok);
+	h_append_buf_formatted(buf, "%s", skills_get_name(*si));
+}
+
 void fill_skill_names();
 
 void skills_init_parsers()
 {
-	TT_SkillID = h_allocate_token_new("SkillID", NULL, pp_skillid);
+	TT_SkillID = h_allocate_token_new("SkillID", unamb_skillid, pp_skillid);
 	H_VARULE(skillid, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	d1askillid = skillid;
 	fill_skill_names();

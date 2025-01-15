@@ -264,8 +264,31 @@ void init_char_parser()
 
 }
 
-void print_summary(HParseResult char_res)
+void print_summary(HParseResult *char_res)
 {
+	D1ACharSummary summary;
+	summary.level = H_INDEX_UINT(char_res->ast, 45);
+	summary.mana = H_INDEX_UINT(char_res->ast, 35);
+	summary.exp = H_INDEX_UINT(char_res->ast, 0);
+
+	ItemType *weapon = H_INDEX(ItemType, char_res->ast, 1, 19); // Itemtype is 19th element. Later, an Item token can be defined
+	summary.weapon = itemtypes_get_name(*weapon);
+
+	//HCountedArray *equipment = H_INDEX_SEQ(char_res->ast, 2);
+	for(int i = 0; i < 3; i++)
+	{
+		ItemType *item = H_INDEX(ItemType, char_res->ast, 2, i, 19);
+		summary.equipment[i] = itemtypes_get_name(*item);
+	}
+
+	printf("Level: %d\nMana: %d\nEXP: %d\n", summary.level, summary.mana, summary.exp);
+	printf("Weapon:\n");
+	printf("\t%s\n", summary.weapon);
+	printf("Items:\n");
+	for(int i = 0; i < 3; i++)
+	{
+		printf("\t%s\n", summary.equipment[i]);
+	}
 	return;
 }
 
@@ -313,6 +336,7 @@ int main(int argc, char *argv[])
 	}
 
 	h_pprintln(stdout, res_d1char->ast);
+	print_summary(res_d1char);
 
 	close(fd);
 	return 0;
