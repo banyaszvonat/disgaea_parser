@@ -447,4 +447,16 @@ void fill_skill_names()
 	skill_names[0x0F0C] = "0F0C - Fiery Column";
 	skill_names[0x0F0D] = "0F0D - Fiery Roar";
 	skill_names[0x0F0E] = "0F0E - Fiery Burst";
+
+	// Was not in save edit guide
+	skill_names[0x0354] = "0354 - Slumber";
+	skill_names[0x0357] = "0357 - Charm";
+
+	// Afternoon of Darkness Exclusives
+	skill_names[0x0BCD] = "0BCD - Soaring Fire";
+	skill_names[0x0BCE] = "0BCE - Vulcan Blaze";
+	skill_names[0x0BD7] = "0BD7 - Rose Thorns";
+	skill_names[0x0BD8] = "0BD8 - Rose Liberation";
+	skill_names[0x0BE1] = "0BE1 - Zetta Beam";
+	skill_names[0x0BE2] = "0BE2 - BadAss Overdrive";
 }
