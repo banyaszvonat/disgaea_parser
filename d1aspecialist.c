@@ -7,6 +7,8 @@ HParser *d1aspecialistlevel;
 
 const char *specialist_job_names[0x87] = { "!!Invalid Job ID!!!" };
 
+static int initialized = 0;
+
 HParsedToken* act_specialistlevel(const HParseResult *p, void *u)
 {
 	SpecialistLevel *sl = H_ALLOC(SpecialistLevel);
@@ -80,6 +82,8 @@ void specialists_init_parsers()
 	TT_SpecialistJob = h_allocate_token_new("SpecialistJob", NULL, pp_specialistjob);
 	H_VARULE(specialistjob, h_uint8());
 	d1aspecialistjob = specialistjob;
+
+	initialized = 1;
 }
 
 
@@ -124,4 +128,9 @@ void fill_specialist_job_names()
 	specialist_job_names[0x84] = "Item King";
 	specialist_job_names[0x85] = "Item God";
 	specialist_job_names[0x86] = "Item God 2";
+}
+
+int specialists_initialized()
+{
+	return initialized;
 }
