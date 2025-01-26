@@ -3,6 +3,8 @@
 
 #include <hammer/hammer.h>
 
+/* Specialist level */
+
 typedef struct {
 	uint16_t level;
 	bool subdued;
@@ -13,6 +15,8 @@ extern HTokenType TT_SpecialistLevel;
 
 HParsedToken* act_specialistlevel(const HParseResult *p, void *u);
 void pp_specialistlevel(FILE *stream, const HParsedToken *tok, int indent, int delta);
+
+/* Specialist job */
 
 typedef uint8_t SpecialistJob;
 
@@ -25,8 +29,8 @@ bool validate_specialistjob(HParseResult *p, void *u);
 HParsedToken *act_specialistjob(const HParseResult *p, void *u);
 void pp_specialistjob(FILE *stream, const HParsedToken *tok, int indent, int delta);
 
-//TODO
-/*
+/* Specialist */
+
 typedef struct {
 	SpecialistLevel *level;
 	SpecialistJob job;
@@ -38,7 +42,8 @@ extern HTokenType TT_Specialist;
 
 HParsedToken *act_specialist(const HParseResult *p, void *u);
 void pp_specialist(FILE *stream, const HParsedToken *tok, int indent, int delta);
-*/
+
+/* Initialization, check init status */
 
 void specialists_init_parsers();
 //TODO: other parsers should allow checking initialization status too

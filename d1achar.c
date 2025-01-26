@@ -11,7 +11,6 @@
 
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
-HParser *d1aspecialist; // TODO: move entirely to d1aspecialist.h and .c
 HParser *d1atxtstring;
 
 typedef struct {
@@ -104,16 +103,6 @@ void init_text_string_parser()
 
 	//d1atxtstring = text_string;
 	d1atxtstring = d1asavestring;
-}
-
-void init_specialist_parser()
-{
-	//H_RULE(spec_level, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	//H_RULE(spec_job, h_uint8());
-	H_RULE(spec_uniquer, h_uint8());
-
-	//d1aspecialist = h_sequence(spec_level, spec_job, spec_uniquer, NULL);
-	d1aspecialist = h_sequence(d1aspecialistlevel, d1aspecialistjob, spec_uniquer, NULL);
 }
 
 void init_item_parser()
@@ -354,7 +343,6 @@ int main(int argc, char *argv[])
 
 	init_text_string_parser();
 	specialists_init_parsers();
-	init_specialist_parser(); //TODO: remove this function after moving the parsers to d1aspecialist.c
 	itemtypes_init_parser();
 	init_item_parser();
 	skills_init_parsers();

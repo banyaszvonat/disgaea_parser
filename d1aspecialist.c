@@ -69,6 +69,31 @@ void pp_specialistjob(FILE *stream, const HParsedToken *tok, int indent, int del
 	fprintf(stream, "%s", specialists_get_job_name(*sj));
 }
 
+HTokenType TT_Specialist;
+HParser *d1aspecialist;
+
+HParsedToken *act_specialist(const HParseResult *p, void *u)
+{
+	Specialist *specialist = H_ALLOC(Specialist);
+
+	specialist->level = H_INDEX(SpecialistLevel, p->ast, 0);
+	specialist->job = *H_INDEX(SpecialistJob, p->ast, 1);
+	specialist->uniquer = H_INDEX_UINT(p->ast, 2);
+
+	return H_MAKE(Specialist, specialist);
+}
+
+void pp_specialist(FILE *stream, const HParsedToken *tok, int indent, int delta)
+{
+	Specialist *specialist = H_CAST(Specialist, tok);
+
+	fprintf(stream, "Level: %d%s, Job: %s, uniquer: %d",
+		specialist->level->level,
+		specialist->level->subdued ? " (subdued)" : "",
+		specialists_get_job_name(specialist->job),
+		specialist->uniquer);
+}
+
 void fill_specialist_job_names();
 
 void specialists_init_parsers()
@@ -82,6 +107,10 @@ void specialists_init_parsers()
 	TT_SpecialistJob = h_allocate_token_new("SpecialistJob", NULL, pp_specialistjob);
 	H_VARULE(specialistjob, h_uint8());
 	d1aspecialistjob = specialistjob;
+
+	TT_Specialist = h_allocate_token_new("Specialist", NULL, pp_specialist);
+	H_ARULE(specialist, h_sequence(d1aspecialistlevel, d1aspecialistjob, h_uint8(), NULL));
+	d1aspecialist = specialist;
 
 	initialized = 1;
 }
