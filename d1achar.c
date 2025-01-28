@@ -209,8 +209,14 @@ void init_char_parser()
 	H_RULE(char_unk67, h_uint8());
 	H_RULE(char_unk87, h_uint8());
 	H_RULE(char_unk86, h_repeat_n(h_uint8(), 4));
-	H_RULE(char_unk72, h_uint8());
-	H_RULE(char_unk71, h_repeat_n(h_uint8(), 7)); // presumably these are single-byte fields too
+	H_RULE(char_fist_aptitude, h_uint8()); // from status screen code reading these values
+	H_RULE(char_sword_aptitude, h_uint8());
+	H_RULE(char_spear_aptitude, h_uint8());
+	H_RULE(char_bow_aptitude, h_uint8());
+	H_RULE(char_gun_aptitude, h_uint8());
+	H_RULE(char_axe_aptitude, h_uint8());
+	H_RULE(char_staff_aptitude, h_uint8());
+	H_RULE(char_monsterwep_aptitude, h_uint8());
 
 	H_RULE(char_hp_base, h_uint8());
 	H_RULE(char_sp_base, h_uint8());
@@ -270,7 +276,11 @@ void init_char_parser()
 				char_unk68,
 				char_unk4, char_mana, char_unk99, char_unk70,
 				char_unk69, char_unk67, char_unk87,
-				char_unk86, char_unk72, char_unk71, char_hp_base,
+				char_unk86, char_fist_aptitude, char_sword_aptitude,
+				char_spear_aptitude, char_bow_aptitude,
+				char_gun_aptitude, char_axe_aptitude,
+				char_staff_aptitude, char_monsterwep_aptitude,
+				char_hp_base,
 				char_sp_base, char_atk_base, char_def_base,
 				char_int_base, char_spd_base, char_hit_base,
 				char_res_base, char_level, char_unk89, char_classid,
@@ -295,7 +305,7 @@ void print_summary(HParseResult *char_res)
 	summary.name = H_INDEX_BYTES(char_res->ast, 3);
 	summary.class = H_INDEX_BYTES(char_res->ast, 5);
 
-	summary.level = H_INDEX_UINT(char_res->ast, 60);
+	summary.level = H_INDEX_UINT(char_res->ast, 66);
 	summary.mana = H_INDEX_UINT(char_res->ast, 43);
 	summary.exp = H_INDEX_UINT(char_res->ast, 0);
 
@@ -313,7 +323,7 @@ void print_summary(HParseResult *char_res)
 		summary.equipment[i] = *item;
 	}
 
-	summary.skills_known = H_INDEX_UINT(char_res->ast, 79);
+	summary.skills_known = H_INDEX_UINT(char_res->ast, 85);
 	for(int i = 0; i < summary.skills_known; i++)
 	{
 		summary.skills[i] = *H_INDEX(SkillID, char_res->ast, 21, i);
