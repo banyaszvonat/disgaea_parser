@@ -200,15 +200,24 @@ void init_char_parser()
 	H_RULE(char_hit_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_res_actual, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 
-	H_RULE(char_unk68, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
-	H_RULE(char_unk4, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()), 7)); // guess, seeing how all the other fields here are 4 bytes
+	H_RULE(char_fist_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32())); // based on status screen, 0 when corresponding weapon XP is 0
+	H_RULE(char_sword_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32())); // don't know the xp curve for weapons, but large weapon level corresponds to a large value here
+	H_RULE(char_spear_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_bow_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_gun_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_staff_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_axe_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
+	H_RULE(char_monsterwep_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_mana, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_unk99, h_repeat_n(h_uint8(), 24));
-	H_RULE(char_unk70, h_uint8());
-	H_RULE(char_unk69, h_uint8());
-	H_RULE(char_unk67, h_uint8());
-	H_RULE(char_unk87, h_uint8());
-	H_RULE(char_unk86, h_repeat_n(h_uint8(), 4));
+	H_RULE(char_fist_level, h_uint8()); // values identical to the levels displayed on status screen
+	H_RULE(char_sword_level, h_uint8());
+	H_RULE(char_spear_level, h_uint8());
+	H_RULE(char_bow_level, h_uint8());
+	H_RULE(char_gun_level, h_uint8());
+	H_RULE(char_axe_level, h_uint8());
+	H_RULE(char_staff_level, h_uint8());
+	H_RULE(char_monsterwep_level, h_uint8());
 	H_RULE(char_fist_aptitude, h_uint8()); // from status screen code reading these values
 	H_RULE(char_sword_aptitude, h_uint8());
 	H_RULE(char_spear_aptitude, h_uint8());
@@ -273,10 +282,13 @@ void init_char_parser()
 				char_hit, char_res, char_hp_actual, char_sp_actual,
 				char_atk_actual, char_def_actual, char_int_actual,
 				char_spd_actual, char_hit_actual, char_res_actual,
-				char_unk68,
-				char_unk4, char_mana, char_unk99, char_unk70,
-				char_unk69, char_unk67, char_unk87,
-				char_unk86, char_fist_aptitude, char_sword_aptitude,
+				char_fist_xp, char_sword_xp, char_spear_xp,
+				char_bow_xp, char_gun_xp, char_axe_xp, char_staff_xp,
+				char_monsterwep_xp,  char_mana, char_unk99,
+				char_fist_level, char_sword_level, char_spear_level,
+				char_bow_level, char_gun_level, char_axe_level,
+				char_staff_level, char_monsterwep_level,
+				char_fist_aptitude, char_sword_aptitude,
 				char_spear_aptitude, char_bow_aptitude,
 				char_gun_aptitude, char_axe_aptitude,
 				char_staff_aptitude, char_monsterwep_aptitude,
@@ -305,8 +317,8 @@ void print_summary(HParseResult *char_res)
 	summary.name = H_INDEX_BYTES(char_res->ast, 3);
 	summary.class = H_INDEX_BYTES(char_res->ast, 5);
 
-	summary.level = H_INDEX_UINT(char_res->ast, 66);
-	summary.mana = H_INDEX_UINT(char_res->ast, 43);
+	summary.level = H_INDEX_UINT(char_res->ast, 75);
+	summary.mana = H_INDEX_UINT(char_res->ast, 49);
 	summary.exp = H_INDEX_UINT(char_res->ast, 0);
 
 	/*
@@ -323,7 +335,7 @@ void print_summary(HParseResult *char_res)
 		summary.equipment[i] = *item;
 	}
 
-	summary.skills_known = H_INDEX_UINT(char_res->ast, 85);
+	summary.skills_known = H_INDEX_UINT(char_res->ast, 94);
 	for(int i = 0; i < summary.skills_known; i++)
 	{
 		summary.skills[i] = *H_INDEX(SkillID, char_res->ast, 21, i);
