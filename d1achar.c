@@ -265,7 +265,9 @@ void init_char_parser()
 	H_RULE(char_currentweapontype, h_uint8());
 	H_RULE(char_unk83, h_repeat_n(h_uint8(), 3));
 	H_RULE(char_assemblyrank, h_uint8());
-	H_RULE(char_unk93, h_repeat_n(h_uint8(), 4));
+	H_RULE(char_unk93, h_repeat_n(h_uint8(), 2));
+	H_RULE(char_mentorindex, h_uint8());
+	H_RULE(char_unk60, h_uint8());
 	H_RULE(char_unk92, h_uint8());
 	H_RULE(char_unk95, h_repeat_n(h_uint8(), 9));
 	H_RULE(char_unk74, h_uint8());
@@ -305,7 +307,8 @@ void init_char_parser()
 				char_counter_actual, char_unk85, char_skillsknown,
 				char_unk97, char_unk82,
 				char_currentweapontype, char_unk83,
-				char_assemblyrank, char_unk93, char_unk92,
+				char_assemblyrank, char_unk93, char_mentorindex,
+				char_unk60,  char_unk92,
 				char_unk95, char_unk74, char_unk73, NULL);
 
 }
