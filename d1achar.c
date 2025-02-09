@@ -412,7 +412,9 @@ int main(int argc, char *argv[])
 		return 2;
 	}
 
-	//h_pprintln(stdout, res_d1char->ast);
+	#ifndef NDEBUG
+		h_pprintln(stdout, res_d1char->ast);
+	#endif
 	print_summary(res_d1char);
 
 	close(fd);
