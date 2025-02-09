@@ -8,6 +8,7 @@
 #include "d1aitemtypes.h"
 #include "d1aspecialist.h"
 #include "d1askills.h"
+#include "d1aweaponmasteries.h"
 
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
@@ -218,14 +219,14 @@ void init_char_parser(void)
 	H_RULE(char_axe_level, h_uint8());
 	H_RULE(char_staff_level, h_uint8());
 	H_RULE(char_monsterwep_level, h_uint8());
-	H_RULE(char_fist_aptitude, h_uint8()); // from status screen code reading these values
-	H_RULE(char_sword_aptitude, h_uint8());
-	H_RULE(char_spear_aptitude, h_uint8());
-	H_RULE(char_bow_aptitude, h_uint8());
-	H_RULE(char_gun_aptitude, h_uint8());
-	H_RULE(char_axe_aptitude, h_uint8());
-	H_RULE(char_staff_aptitude, h_uint8());
-	H_RULE(char_monsterwep_aptitude, h_uint8());
+	H_RULE(char_fist_mastery, d1aweaponmastery); // from status screen code reading these values
+	H_RULE(char_sword_mastery, d1aweaponmastery);
+	H_RULE(char_spear_mastery, d1aweaponmastery);
+	H_RULE(char_bow_mastery, d1aweaponmastery);
+	H_RULE(char_gun_mastery, d1aweaponmastery);
+	H_RULE(char_axe_mastery, d1aweaponmastery);
+	H_RULE(char_staff_mastery, d1aweaponmastery);
+	H_RULE(char_monsterwep_mastery, d1aweaponmastery);
 
 	H_RULE(char_hp_base, h_uint8());
 	H_RULE(char_sp_base, h_uint8());
@@ -290,10 +291,10 @@ void init_char_parser(void)
 				char_fist_level, char_sword_level, char_spear_level,
 				char_bow_level, char_gun_level, char_axe_level,
 				char_staff_level, char_monsterwep_level,
-				char_fist_aptitude, char_sword_aptitude,
-				char_spear_aptitude, char_bow_aptitude,
-				char_gun_aptitude, char_axe_aptitude,
-				char_staff_aptitude, char_monsterwep_aptitude,
+				char_fist_mastery, char_sword_mastery,
+				char_spear_mastery, char_bow_mastery,
+				char_gun_mastery, char_axe_mastery,
+				char_staff_mastery, char_monsterwep_mastery,
 				char_hp_base,
 				char_sp_base, char_atk_base, char_def_base,
 				char_int_base, char_spd_base, char_hit_base,
@@ -401,6 +402,7 @@ int main(int argc, char *argv[])
 	itemtypes_init_parser();
 	init_item_parser();
 	skills_init_parsers();
+	weaponmasteries_init_parsers();
 	init_char_parser();
 
 	res_d1char = h_parse(d1achar, input_bytes, sz);
