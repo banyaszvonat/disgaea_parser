@@ -8,7 +8,7 @@ typedef uint16_t SkillID;
 extern HParser *d1askillid;
 extern HTokenType TT_SkillID;
 
-void skills_init_parsers();
+void skills_init_parsers(void);
 const char *skills_get_name(SkillID id);
 
 bool validate_skillid(HParseResult *p, void *u);

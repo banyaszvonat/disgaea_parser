@@ -94,9 +94,9 @@ void pp_specialist(FILE *stream, const HParsedToken *tok, int indent, int delta)
 		specialist->uniquer);
 }
 
-void fill_specialist_job_names();
+void fill_specialist_job_names(void);
 
-void specialists_init_parsers()
+void specialists_init_parsers(void)
 {
 	TT_SpecialistLevel = h_allocate_token_new("SpecialistLevel", NULL, pp_specialistlevel);
 	H_ARULE(specialistlevel, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
@@ -116,7 +116,7 @@ void specialists_init_parsers()
 }
 
 
-void fill_specialist_job_names()
+void fill_specialist_job_names(void)
 {
 	specialist_job_names[0x01] = "Dietician";
 	specialist_job_names[0x02] = "Master";
@@ -159,7 +159,7 @@ void fill_specialist_job_names()
 	specialist_job_names[0x86] = "Item God 2";
 }
 
-int specialists_initialized()
+int specialists_initialized(void)
 {
 	return initialized;
 }

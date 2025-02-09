@@ -45,9 +45,9 @@ void pp_specialist(FILE *stream, const HParsedToken *tok, int indent, int delta)
 
 /* Initialization, check init status */
 
-void specialists_init_parsers();
+void specialists_init_parsers(void);
 //TODO: other parsers should allow checking initialization status too
-int specialists_initialized();
+int specialists_initialized(void);
 
 #endif // D1ASPECIALIST_H
 

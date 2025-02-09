@@ -45,9 +45,9 @@ void unamb_skillid(const HParsedToken *tok, struct result_buf *buf)
 	h_append_buf_formatted(buf, "%s", skills_get_name(*si));
 }
 
-void fill_skill_names();
+void fill_skill_names(void);
 
-void skills_init_parsers()
+void skills_init_parsers(void)
 {
 	TT_SkillID = h_allocate_token_new("SkillID", unamb_skillid, pp_skillid);
 	H_VARULE(skillid, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
@@ -59,7 +59,7 @@ void skills_init_parsers()
   Because some skill IDs share names, the ID number is included in the name.
   Source of the data: https://gamefaqs.gamespot.com/ps2/589678-disgaea-hour-of-darkness/faqs/35073
 */
-void fill_skill_names()
+void fill_skill_names(void)
 {
 	skill_names[0] = "0000 - None";
 

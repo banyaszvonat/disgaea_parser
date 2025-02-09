@@ -7,7 +7,7 @@ typedef uint16_t ItemType;
 
 extern HTokenType TT_ItemType;
 
-void itemtypes_init_parser();
+void itemtypes_init_parser(void);
 const char* itemtypes_get_name(ItemType id);
 
 bool validate_itemtype(HParseResult *p, void *u);

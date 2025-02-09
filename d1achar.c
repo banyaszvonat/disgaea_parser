@@ -92,7 +92,7 @@ act_d1asavestring(const HParseResult *p, void *u)
 	return H_MAKE_BYTES(bytes, seq->used);
 }
 
-void init_text_string_parser()
+void init_text_string_parser(void)
 {
 	//H_RULE(text_string, h_repeat_n(h_uint16(), 16));
 	//HACK: strings generally seem to be two bytes per character, terminated by a single null byte.
@@ -105,7 +105,7 @@ void init_text_string_parser()
 	d1atxtstring = d1asavestring;
 }
 
-void init_item_parser()
+void init_item_parser(void)
 {
 	H_RULE(item_specialists, h_repeat_n(d1aspecialist, 16));
 
@@ -151,7 +151,7 @@ void init_item_parser()
 				item_unk3, item_unk4, item_spec_slots, item_unk5, NULL);
 }
 
-void init_char_parser()
+void init_char_parser(void)
 {
 	H_RULE(char_exp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint64()));
 
