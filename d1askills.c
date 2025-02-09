@@ -5,6 +5,8 @@
 HParser *d1askillid;
 HTokenType TT_SkillID;
 
+static int initialized = 0;
+
 const char* skill_names[0xF0F] = { "!!Invalid Skill ID!!" };
 
 bool validate_skillid(HParseResult *p, void *u)
@@ -53,6 +55,12 @@ void skills_init_parsers(void)
 	H_VARULE(skillid, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	d1askillid = skillid;
 	fill_skill_names();
+	initialized = 1;
+}
+
+int skills_initialized(void)
+{
+	return initialized;
 }
 
 /*

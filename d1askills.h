@@ -8,12 +8,14 @@ typedef uint16_t SkillID;
 extern HParser *d1askillid;
 extern HTokenType TT_SkillID;
 
-void skills_init_parsers(void);
 const char *skills_get_name(SkillID id);
 
 bool validate_skillid(HParseResult *p, void *u);
 HParsedToken* act_skillid(const HParseResult *p, void *u);
 void pp_skillid(FILE *stream, const HParsedToken *tok, int indent, int delta);
+
+void skills_init_parsers(void);
+int skills_initialized(void);
 
 //TODO
 /*
