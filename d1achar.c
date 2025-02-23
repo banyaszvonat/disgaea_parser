@@ -13,6 +13,7 @@
 HParser *d1achar; // character data, not the specially encoded text
 HParser *d1aitem;
 HParser *d1atxtstring;
+HParser *d1atitlestring;
 
 typedef struct {
 	HBytes name;
@@ -93,6 +94,11 @@ act_d1asavestring(const HParseResult *p, void *u)
 	return H_MAKE_BYTES(bytes, seq->used);
 }
 
+/*
+  Reuse semantic action for a different ARULE
+*/
+#define act_d1asmallsavestring act_d1asavestring
+
 void init_text_string_parser(void)
 {
 	//H_RULE(text_string, h_repeat_n(h_uint16(), 16));
@@ -101,9 +107,11 @@ void init_text_string_parser(void)
 	//	need to test: h_choice(h_ch('\0'), h_many1(h_butnot(h_uint16(), h_ch('\0')), NULL), NULL);
 	H_ARULE(d1atxtchar, h_uint16());
 	H_ARULE(d1asavestring, h_repeat_n(d1atxtchar, 16));
+	H_ARULE(d1asmallsavestring, h_repeat_n(d1atxtchar, 13));
 
 	//d1atxtstring = text_string;
 	d1atxtstring = d1asavestring;
+	d1atitlestring = d1asmallsavestring;
 }
 
 void init_item_parser(void)
