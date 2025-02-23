@@ -17,7 +17,7 @@ HParser *d1atitlestring;
 
 typedef struct {
 	HBytes name;
-	HBytes class;
+	HBytes title;
 	int level;
 	int mana;
 	int exp;
@@ -102,9 +102,7 @@ act_d1asavestring(const HParseResult *p, void *u)
 void init_text_string_parser(void)
 {
 	//H_RULE(text_string, h_repeat_n(h_uint16(), 16));
-	//HACK: strings generally seem to be two bytes per character, terminated by a single null byte.
-	//	although the size reserved for it in the character data seems to be 32+1 bytes, so we can get away with assuming fixed size
-	//	need to test: h_choice(h_ch('\0'), h_many1(h_butnot(h_uint16(), h_ch('\0')), NULL), NULL);
+	//TODO: savestring length as parameter
 	H_ARULE(d1atxtchar, h_uint16());
 	H_ARULE(d1asavestring, h_repeat_n(d1atxtchar, 16));
 	H_ARULE(d1asmallsavestring, h_repeat_n(d1atxtchar, 13));
@@ -169,8 +167,8 @@ void init_char_parser(void)
 
 	H_RULE(char_name, d1atxtstring);
 	H_RULE(char_unk1, h_uint8());
-	H_RULE(char_class, d1atxtstring);
-	H_RULE(char_unk98, h_repeat_n(h_uint8(), 35));
+	H_RULE(char_title, d1atitlestring);
+	H_RULE(char_unk98, h_repeat_n(h_uint8(), 41));
 	H_RULE(char_psn_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(char_slp_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(char_par_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
@@ -291,7 +289,7 @@ void init_char_parser(void)
 	H_RULE(char_unk73, h_repeat_n(h_uint8(), 11));
 
 	d1achar = h_sequence(char_exp, char_weapon, char_etc_items, char_name, char_unk1,
-				char_class, char_unk98, char_psn_resist, char_slp_resist,
+				char_title, char_unk98, char_psn_resist, char_slp_resist,
 				char_par_resist, char_fgt_resist, char_dpr_resist,
 				char_unk91, char_unk90, char_unk81, char_unk80,
 				char_unk79, char_unk78, char_unk77,
@@ -339,7 +337,7 @@ void print_summary(HParseResult *char_res)
 	D1ACharSummary summary;
 
 	summary.name = H_INDEX_BYTES(char_res->ast, 3);
-	summary.class = H_INDEX_BYTES(char_res->ast, 5);
+	summary.title = H_INDEX_BYTES(char_res->ast, 5);
 
 	summary.level = H_INDEX_UINT(char_res->ast, 83);
 	summary.mana = H_INDEX_UINT(char_res->ast, 49);
@@ -372,7 +370,7 @@ void print_summary(HParseResult *char_res)
 	  Additionally, these particular strings are a fixed 32 bytes (16 characters).
 	*/
 	printf("Name: %.*s\n", (int) summary.name.len, summary.name.token);
-	printf("Class: %.*s\n", (int) summary.class.len, summary.class.token);
+	printf("Title: %.*s\n", (int) summary.title.len, summary.title.token);
 
 	printf("Level: %d\nMana: %d\nEXP: %d\n", summary.level, summary.mana, summary.exp);
 	printf("Weapon:\n");
