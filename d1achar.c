@@ -210,7 +210,15 @@ void init_char_parser(void)
 	H_RULE(char_axe_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_monsterwep_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_mana, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
-	H_RULE(char_unk99, h_repeat_n(h_uint8(), 24));
+	H_RULE(char_hp_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_sp_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_atk_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_def_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_int_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_spd_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_hit_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_res_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_unk99, h_repeat_n(h_uint8(), 8));
 	H_RULE(char_fist_level, h_uint8()); // values identical to the levels displayed on status screen
 	H_RULE(char_sword_level, h_uint8());
 	H_RULE(char_spear_level, h_uint8());
@@ -287,7 +295,11 @@ void init_char_parser(void)
 				char_spd_actual, char_hit_actual, char_res_actual,
 				char_fist_xp, char_sword_xp, char_spear_xp,
 				char_bow_xp, char_gun_xp, char_axe_xp, char_staff_xp,
-				char_monsterwep_xp,  char_mana, char_unk99,
+				char_monsterwep_xp,  char_mana, char_hp_growthvalue,
+				char_sp_growthvalue, char_atk_growthvalue,
+				char_def_growthvalue, char_int_growthvalue,
+				char_spd_growthvalue, char_hit_growthvalue,
+				char_res_growthvalue, char_unk99,
 				char_fist_level, char_sword_level, char_spear_level,
 				char_bow_level, char_gun_level, char_axe_level,
 				char_staff_level, char_monsterwep_level,
@@ -321,7 +333,7 @@ void print_summary(HParseResult *char_res)
 	summary.name = H_INDEX_BYTES(char_res->ast, 3);
 	summary.class = H_INDEX_BYTES(char_res->ast, 5);
 
-	summary.level = H_INDEX_UINT(char_res->ast, 75);
+	summary.level = H_INDEX_UINT(char_res->ast, 83);
 	summary.mana = H_INDEX_UINT(char_res->ast, 49);
 	summary.exp = H_INDEX_UINT(char_res->ast, 0);
 
@@ -339,7 +351,7 @@ void print_summary(HParseResult *char_res)
 		summary.equipment[i] = *item;
 	}
 
-	summary.skills_known = H_INDEX_UINT(char_res->ast, 94);
+	summary.skills_known = H_INDEX_UINT(char_res->ast, 102);
 	for(int i = 0; i < summary.skills_known; i++)
 	{
 		summary.skills[i] = *H_INDEX(SkillID, char_res->ast, 21, i);
