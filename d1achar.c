@@ -176,12 +176,17 @@ void init_char_parser(void)
 	H_RULE(char_dpr_resist, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(char_unk91, h_repeat_n(h_uint8(), 78));
 	H_RULE(char_unk90, h_uint8());
-	H_RULE(char_unk81, h_uint8());
-	H_RULE(char_unk80, h_uint8());
-	H_RULE(char_unk79, h_uint8());
-	H_RULE(char_unk78, h_uint8());
-	H_RULE(char_unk77, h_uint8());
-	H_RULE(char_unk2, h_repeat_n(h_uint8(), 26));
+	H_RULE(char_poison_affected, h_uint8());
+	H_RULE(char_sleep_affected, h_uint8());
+	H_RULE(char_paralyze_affected, h_uint8());
+	H_RULE(char_forget_affected, h_uint8());
+	H_RULE(char_deprave_affected, h_uint8());
+	H_RULE(char_unk_30a, h_repeat_n(h_uint8(), 2));
+	H_RULE(char_atk_statuseffect, h_uint8());
+	H_RULE(char_def_statuseffect, h_uint8());
+	H_RULE(char_res_statuseffect, h_uint8());
+	H_RULE(char_int_statuseffect, h_uint8());
+	H_RULE(char_unk2, h_repeat_n(h_uint8(), 20));
 	H_RULE(char_skillexps, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()), 96));
 	//H_RULE(char_skillids, h_repeat_n(h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()), 96));
 	H_RULE(char_skillids, h_repeat_n(d1askillid, 96));
@@ -278,7 +283,9 @@ void init_char_parser(void)
 	H_RULE(char_unk97, h_repeat_n(h_uint8(), 6));
 	H_RULE(char_unk82, h_uint8());
 	H_RULE(char_currentweapontype, h_uint8());
-	H_RULE(char_unk83, h_repeat_n(h_uint8(), 3));
+	H_RULE(char_unk83, h_uint8());
+	H_RULE(char_portrait_id, h_uint8());
+	H_RULE(char_portrait_palette, h_uint8());
 	H_RULE(char_assemblyrank, h_uint8());
 	H_RULE(char_unk93, h_repeat_n(h_uint8(), 2));
 	H_RULE(char_mentorindex, h_uint8());
@@ -291,8 +298,12 @@ void init_char_parser(void)
 	d1achar = h_sequence(char_exp, char_weapon, char_etc_items, char_name, char_unk1,
 				char_title, char_unk98, char_psn_resist, char_slp_resist,
 				char_par_resist, char_fgt_resist, char_dpr_resist,
-				char_unk91, char_unk90, char_unk81, char_unk80,
-				char_unk79, char_unk78, char_unk77,
+				char_unk91, char_unk90, char_poison_affected,
+				char_sleep_affected, char_paralyze_affected,
+				char_forget_affected, char_deprave_affected,
+				char_unk_30a, char_atk_statuseffect,
+				char_def_statuseffect, char_res_statuseffect,
+				char_int_statuseffect,
 				char_unk2, char_skillexps, char_skillids,
 				char_skillevels, char_hp_current, char_sp_current,
 				char_hp, char_sp, char_atk, char_def, char_int, char_spd,
@@ -325,7 +336,8 @@ void init_char_parser(void)
 				char_mv_base, char_mv_actual, char_counter_base,
 				char_counter_actual, char_unk85, char_skillsknown,
 				char_unk97, char_unk82,
-				char_currentweapontype, char_unk83,
+				char_currentweapontype, char_unk83, char_portrait_id,
+				char_portrait_palette,
 				char_assemblyrank, char_unk93, char_mentorindex,
 				char_unk60,  char_unk92,
 				char_unk95, char_unk74, char_unk73, NULL);
@@ -339,8 +351,8 @@ void print_summary(HParseResult *char_res)
 	summary.name = H_INDEX_BYTES(char_res->ast, 3);
 	summary.title = H_INDEX_BYTES(char_res->ast, 5);
 
-	summary.level = H_INDEX_UINT(char_res->ast, 83);
-	summary.mana = H_INDEX_UINT(char_res->ast, 49);
+	summary.level = H_INDEX_UINT(char_res->ast, 88);
+	summary.mana = H_INDEX_UINT(char_res->ast, 54);
 	summary.exp = H_INDEX_UINT(char_res->ast, 0);
 
 	/*
@@ -357,10 +369,10 @@ void print_summary(HParseResult *char_res)
 		summary.equipment[i] = *item;
 	}
 
-	summary.skills_known = H_INDEX_UINT(char_res->ast, 102);
+	summary.skills_known = H_INDEX_UINT(char_res->ast, 107);
 	for(int i = 0; i < summary.skills_known; i++)
 	{
-		summary.skills[i] = *H_INDEX(SkillID, char_res->ast, 21, i);
+		summary.skills[i] = *H_INDEX(SkillID, char_res->ast, 26, i);
 	}
 
 	/*
