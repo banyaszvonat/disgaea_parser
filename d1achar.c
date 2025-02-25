@@ -221,14 +221,14 @@ void init_char_parser(void)
 	H_RULE(char_axe_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_monsterwep_xp, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
 	H_RULE(char_mana, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint32()));
-	H_RULE(char_hp_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(char_sp_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(char_atk_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(char_def_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(char_int_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(char_spd_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(char_hit_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
-	H_RULE(char_res_growthvalue, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_hp_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_sp_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_atk_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_def_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_int_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_spd_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_hit_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
+	H_RULE(char_res_growth_value, h_with_endianness(BYTE_LITTLE_ENDIAN|BIT_BIG_ENDIAN, h_uint16()));
 	H_RULE(char_unk99, h_repeat_n(h_uint8(), 8));
 	H_RULE(char_fist_level, h_uint8()); // values identical to the levels displayed on status screen
 	H_RULE(char_sword_level, h_uint8());
@@ -279,16 +279,16 @@ void init_char_parser(void)
 	H_RULE(char_counter_actual, h_uint8());
 
 	H_RULE(char_unk85, h_uint8());
-	H_RULE(char_skillsknown, h_uint8());
+	H_RULE(char_skills_known, h_uint8());
 	H_RULE(char_unk97, h_repeat_n(h_uint8(), 6));
 	H_RULE(char_unk82, h_uint8());
-	H_RULE(char_currentweapontype, h_uint8());
+	H_RULE(char_current_weapon_type, h_uint8());
 	H_RULE(char_unk83, h_uint8());
 	H_RULE(char_portrait_id, h_uint8());
 	H_RULE(char_portrait_palette, h_uint8());
-	H_RULE(char_assemblyrank, h_uint8());
+	H_RULE(char_assembly_rank, h_uint8());
 	H_RULE(char_unk93, h_repeat_n(h_uint8(), 2));
-	H_RULE(char_mentorindex, h_uint8());
+	H_RULE(char_mentor_index, h_uint8());
 	H_RULE(char_unk60, h_uint8());
 	H_RULE(char_unk92, h_uint8());
 	H_RULE(char_unk95, h_repeat_n(h_uint8(), 9));
@@ -312,11 +312,11 @@ void init_char_parser(void)
 				char_spd_actual, char_hit_actual, char_res_actual,
 				char_fist_xp, char_sword_xp, char_spear_xp,
 				char_bow_xp, char_gun_xp, char_axe_xp, char_staff_xp,
-				char_monsterwep_xp,  char_mana, char_hp_growthvalue,
-				char_sp_growthvalue, char_atk_growthvalue,
-				char_def_growthvalue, char_int_growthvalue,
-				char_spd_growthvalue, char_hit_growthvalue,
-				char_res_growthvalue, char_unk99,
+				char_monsterwep_xp,  char_mana, char_hp_growth_value,
+				char_sp_growth_value, char_atk_growth_value,
+				char_def_growth_value, char_int_growth_value,
+				char_spd_growth_value, char_hit_growth_value,
+				char_res_growth_value, char_unk99,
 				char_fist_level, char_sword_level, char_spear_level,
 				char_bow_level, char_gun_level, char_axe_level,
 				char_staff_level, char_monsterwep_level,
@@ -334,11 +334,11 @@ void init_char_parser(void)
 				char_fire_res_actual, char_wind_res_actual,
 				char_ice_res_actual, char_jump_base, char_jump_actual,
 				char_mv_base, char_mv_actual, char_counter_base,
-				char_counter_actual, char_unk85, char_skillsknown,
+				char_counter_actual, char_unk85, char_skills_known,
 				char_unk97, char_unk82,
-				char_currentweapontype, char_unk83, char_portrait_id,
+				char_current_weapon_type, char_unk83, char_portrait_id,
 				char_portrait_palette,
-				char_assemblyrank, char_unk93, char_mentorindex,
+				char_assembly_rank, char_unk93, char_mentor_index,
 				char_unk60,  char_unk92,
 				char_unk95, char_unk74, char_unk73, NULL);
 
@@ -379,7 +379,7 @@ void print_summary(HParseResult *char_res)
 	  Can get away with casting size_t -> int here unless the game
 	  uses strings longer than INT_MAX, which would get truncated.
 
-	  Additionally, these particular strings are a fixed 32 bytes (16 characters).
+	  Additionally, these particular strings are either 32 or 26 bytes (16 or 13 characters).
 	*/
 	printf("Name: %.*s\n", (int) summary.name.len, summary.name.token);
 	printf("Title: %.*s\n", (int) summary.title.len, summary.title.token);
