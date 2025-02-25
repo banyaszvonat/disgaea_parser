@@ -12,13 +12,13 @@ SOURCES = d1achar.c d1aitemtypes.c d1aspecialist.c d1askills.c d1aweaponmasterie
 
 #.PHONY: all test clean
 .PHONY: all clean
-all: d1achar debug
+all: d1achar d1achar_debug
 
 d1achar: $(SOURCES)
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SOURCES) -lhammer
 
-debug: $(SOURCES)
-	$(CC) -o d1achar_debug $(CFLAGS) -g $(LDFLAGS) $(SOURCES) -lhammer
+d1achar_debug: $(SOURCES)
+	$(CC) -o $@ $(CFLAGS) -g $(LDFLAGS) $(SOURCES) -lhammer
 
 clean:
 	rm -f d1achar d1achar_debug
