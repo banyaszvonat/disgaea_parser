@@ -1,3 +1,6 @@
+# Adapted from Makefile at https://gitlab.special-circumstanc.es/pesco/pdf
+# Copyright (c) 2019 - 2022 Sven M. Hallberg <pesco@khjk.org>
+
 CFLAGS += -std=c99 -Wall -Werror
 
 # find our hammer build - adjust this to your needs
